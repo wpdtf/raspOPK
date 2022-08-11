@@ -1,0 +1,17 @@
+.textColor {
+  color:#dbdbdb;
+  background-color: #1a1a1a;
+  font-family:"Bold";
+}
+
+A {
+    color:#dbdbdb; /* Цвет ссылок */
+   }
+A:visited {
+    color:#dbdbdb; /* Цвет посещенных ссылок */
+   }
+A:active {
+    color:#dbdbdb; /* Цвет активных ссылок */
+   }
+a.text {
+  text-decoration: none;}
