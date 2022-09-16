@@ -88,7 +88,7 @@ def f1():
         return cursor.fetchall()
     group = sql("select distinct db.group.id, db.group.spec, concat(spec.descs, '-', substring(cast(db.group.year as char(4)), 3, 4), '-', cast(db.group.index as char(1))) as 'nameGroup', srok, year from db.group, spec where db.group.spec = spec.id;")
 
-    sotr = sql("select distinct sotr.id, CONCAT(surname, ' ',substring(name, 1, 1), '. ', substring(otchestvo, 1, 1), '.') as 'name' from db.group, sotr, spec, up, ups, ups_sotr where db.group.spec = spec.id and (db.group.year>(year(now())-5)) and spec.id<>24 and up.group=db.group.id and up.id=ups.up and ups.id=ups_sotr.ups and ups_sotr.sotr = sotr.id and sotr.id<>781 and sotr.id<>844 and sotr.id<>892 and sotr.id<>896 and sotr.id<>111 ORDER BY name;")
+    sotr = sql("select distinct sotr.id, CONCAT(surname, ' ',substring(name, 1, 1), '. ', substring(otchestvo, 1, 1), '.') as 'name' from db.group, sotr, spec, up, ups, ups_sotr where db.group.spec = spec.id and (db.group.year>(year(now())-5)) and spec.id<>24 and up.group=db.group.id and up.id=ups.up and ups.id=ups_sotr.ups and ups_sotr.sotr = sotr.id and sotr.id<>892 and sotr.id<>844 and sotr.flags= 1 ORDER BY name;")
 
     spec = sql("select distinct spec.id, spec.desc, spec.descs FROM spec, db.group where db.group.spec = spec.id and (db.group.year>(year(now())-5)) and spec.id <> 24;")
 

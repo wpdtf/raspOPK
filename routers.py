@@ -6,6 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from function import raspTodaySotr, raspTodayGroup, Days, Month, pars_number, whatPlatform
 from __init__ import app, db
 from models import opk_spec, opk_aud, opk_sotr, opk_group, admins_sait, time, bot_user
+from raspCopy.CopyFull import f1
 import bd
 
 
@@ -34,7 +35,7 @@ def index():
     date_end = str()
     timerasp = time.query.all()
     for a in timerasp:
-        if ((date_now >= int(a.hourUP_b) and date_now < int(a.hourEND_b)) or (date_now == int(a.hourEND_b) and date_min <= int(a.minutEND_b))) and today!=', воскресенье' and today!=', суббота':
+        if ((date_now >= int(a.hourUP_b) and date_now < int(a.hourEND_b)) or (date_now == int(a.hourEND_b) and date_min <= int(a.minutEND_b))) and today!=', воскресенье' and today!=', суббота' and int(a.hourUP_b)>=9:
             para = a.title_column
             date_end = f"завершится в {a.hourEND_b}:{a.minutEND_b}"
             break
@@ -46,7 +47,7 @@ def index():
             para = ''
             date_end = 'занятия будут в понедельник'
             break
-        elif date_now <= 9 and today!=', воскресенье' and today!=', суббота':
+        elif date_now <= 9 and today!=', воскресенье' and today!=', суббота' and int(a.hourUP_b)>=9:
             para = ''
             date_end = f'занятия начнутся в {a.hourUP_b}:{a.minutUP_b}'
             break
@@ -57,8 +58,37 @@ def index():
 def groupa(id):
     links = whatPlatform(request)
     groupa = opk_group.query.filter_by(id_spec=id).all()
+    if len(groupa) == 0:
+        return render_template('404.html', links=links), 404
     return render_template('group.html', group = groupa, links=links)
 
+@app.route('/UpdateBD', methods=['POST', 'GET'])
+def UpdateBD():
+    if request.method == 'POST':
+        f1()
+    return '<script>document.location.href = document.referrer</script>'
+
+@app.route('/DeleteZvon/<int:id>', methods=['POST', 'GET'])
+def DeleteZvon(id):
+    if request.method == 'POST':
+        bd.sql(f"delete from time where id = {id};")
+    return '<script>document.location.href = document.referrer</script>'
+
+@app.route('/InsertZvon', methods=['POST', 'GET'])
+def InsertZvon():
+    if request.method == 'POST':
+        t1 = request.form.get(f"title")
+        t2 = request.form.get(f"titleDiscription")
+        t3 = request.form.get(f"hourUP_b")
+        t4 = request.form.get(f"minutUP_b")
+        t5 = request.form.get(f"hourEND_b")
+        t6 = request.form.get(f"minutEND_b")
+        t7 = request.form.get(f"hourUP_s")
+        t8 = request.form.get(f"minutUP_s")
+        t9 = request.form.get(f"hourEND_s")
+        t10 = request.form.get(f"minutEND_s")
+        bd.sql(f"insert into time values (Null, '{t1}', '{t2}', '{t3}', '{t4}', '{t5}', '{t6}', '{t7}', '{t8}', '{t9}', '{t10}');")
+    return '<script>document.location.href = document.referrer</script>'
 
 @app.route('/WhoDidThat')
 def loginPrikol():
@@ -94,36 +124,17 @@ def adminsLoginRout():
 
 
 
-@app.route('/AdminMenuPanel', methods=['POST', 'GET'])
+@app.route('/AdminMenuPanel')
 @login_required
 def adminsMenuRout():
     links = whatPlatform(request)
     timerasp = time.query.all()
-
-    if request.method == 'POST':
-        i = 1
-        while i<9:
-            t1 = request.form.get(f"title_{i}")
-            t2 = request.form.get(f"hourUP_b_{i}")
-            t3 = request.form.get(f"hourUP_s_{i}")
-            t4 = request.form.get(f"hourEND_b_{i}")
-            t5 = request.form.get(f"hourEND_s_{i}")
-            t6 = request.form.get(f"minutUP_b_{i}")
-            t7 = request.form.get(f"minutUP_s_{i}")
-            t8 = request.form.get(f"minutEND_b_{i}")
-            t9 = request.form.get(f"minutEND_s_{i}")
-            bd.sql(f"delete from time where id = {i}")
-            bd.sql(f"insert into time values ({i}, '{t1}', '{t2}', '{t6}', '{t4}', '{t8}', '{t3}', '{t7}', '{t5}', '{t9}');")
-
-            i += 1
-        return redirect(url_for('adminsMenuRout'))
-    else:
-        return render_template('menu.html', timerasp = timerasp, bot_user = bot_user.query.count(), links=links)
+    return render_template('menu.html', timerasp = timerasp, bot_user = bot_user.query.count(), links=links)
 
 @app.errorhandler(500)
 def server_error(e):
     links = whatPlatform(request)
-    return render_template('500.html', links=links), 500
+    return render_template('500.html', links=links), 404
 
 
 @app.errorhandler(404)
@@ -154,7 +165,7 @@ def rasp(id):
             if a[1] in pars_number:
                 raspgroup4.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
         else:
-            return render_template('404.html'), 404
+            return render_template('404.html', links=links), 404
     group_name = opk_group.query.filter_by(id=id).first()
     return render_template('rasp.html', links=links, raspgroup1=raspgroup1, raspgroup2=raspgroup2, raspgroup3=raspgroup3, raspgroup4=raspgroup4, day1=Days(0), day2=Days(1), day3=Days(2), day4=Days(3), month1=Month(0), month2=Month(1), month3=Month(2), month4=Month(3), group_name=group_name)
 
@@ -180,7 +191,7 @@ def raspprep(id):
             if a[1] in pars_number:
                 raspsotr4.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
         else:
-            return render_template('404.html'), 404
+            return render_template('404.html', links=links), 404
     sotr_name = opk_sotr.query.filter_by(id=id).first()
     return render_template('raspprep.html', links=links, raspsotr1=raspsotr1, raspsotr2=raspsotr2, raspsotr3=raspsotr3, raspsotr4=raspsotr4, day1=Days(0), day2=Days(1), day3=Days(2), day4=Days(3), month1=Month(0), month2=Month(1), month3=Month(2), month4=Month(3), sotr_name=sotr_name)
 

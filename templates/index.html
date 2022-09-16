@@ -12,7 +12,7 @@
   </script>
 
   <div class='content'>
-    <div id='imageDIV'><img src="/static/image/logo.svg?serObv" id='imgLogo'></div>
+    <div id='imageDIV'><img src="/static/image/logo.svg" id='imgLogo'></div>
     <div id='titleDIV1'>Расписание ОПК</div>
     <div class='content2'>
       <table border=0 id='Zvon'>
@@ -20,13 +20,17 @@
           <tr><td colspan="3" class='Ftime'>{{ date_end }}</td></tr>
           <tr><td></td><td>будни</td><td class='tdc'>суббота</td>
           {% for a in timerasp %}
+          <tr>
             {% if a.title_column == 'перерыв' %}
-              <tr><td class='tdc'>{{a.title_column}}</td><td class='tdc'>{{a.hourUP_b}}<sup>{{a.minutUP_b}}</sup> - {{a.hourEND_b}}<sup>{{a.minutEND_b}}</sup></td><td></td>
-            {% elif a.hourUP_s == "-1" %}
-              <tr><td>{{a.title_column}}</td><td>{{a.hourUP_b}}<sup>{{a.minutUP_b}}</sup> - {{a.hourEND_b}}<sup>{{a.minutEND_b}}</sup></td><td></td>
+            <td class='tdc'>{{a.title_column}}{% if a.title_dicription !='-1' %}<br><font size='-1'>{{a.title_dicription}}</font>{% endif %}</td>
+            <td class='tdc'>{% if a.hourUP_b != '-1'%}{{a.hourUP_b}}{% endif %}<sup>{% if a.minutUP_b != '-1' %}{{a.minutUP_b}}{% endif %}</sup>{% if a.hourEND_b != '-1' %} - {{a.hourEND_b}}{% endif %}<sup>{% if a.minutEND_b != '-1' %}{{a.minutEND_b}}{% endif %}</sup></td>
+            <td class='tdc'>{% if a.hourUP_s != '-1'%}{{a.hourUP_s}}{% endif %}<sup>{% if a.minutUP_s != '-1' %}{{a.minutUP_s}}{% endif %}</sup>{% if a.hourEND_s != '-1' %} - {{a.hourEND_s}}{% endif %}<sup>{% if a.minutEND_s != '-1' %}{{a.minutEND_s}}{% endif %}</sup></td>
             {% else %}
-              <tr><td>{{a.title_column}}</td><td>{{a.hourUP_b}}<sup>{{a.minutUP_b}}</sup> - {{a.hourEND_b}}<sup>{{a.minutEND_b}}</sup></td><td>{{a.hourUP_s}}<sup>{{a.minutUP_s}}</sup> - {{a.hourEND_s}}<sup>{{a.minutEND_s}}</sup></td>
+            <td>{% if a.title_column != '-1' %}{{a.title_column}}{% endif %}{% if a.title_dicription !='-1' %}<br><font size='-1'>{{a.title_dicription}}</font>{% endif %}</td>
+            <td>{% if a.hourUP_b != '-1' %}{{a.hourUP_b}}{% endif %}<sup>{% if a.minutUP_b != '-1' %}{{a.minutUP_b}}{% endif %}</sup>{% if a.hourEND_b != '-1' %} - {{a.hourEND_b}}{% endif %}<sup>{% if a.minutEND_b != '-1' %}{{a.minutEND_b}}{% endif %}</sup></td>
+            <td>{% if a.hourUP_s != '-1' %}{{a.hourUP_s}}{% endif %}<sup>{% if a.minutUP_s != '-1' %}{{a.minutUP_s}}{% endif %}</sup>{% if a.hourEND_s != '-1' %} - {{a.hourEND_s}}{% endif %}<sup>{% if a.minutEND_s != '-1' %}{{a.minutEND_s}}{% endif %}</sup></td>
             {% endif %}
+          </tr>
           {% endfor %}
         </table>
     </div>

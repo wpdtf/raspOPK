@@ -4,34 +4,50 @@
 <div>
     <div><a href={{url_for("index")}}><img src='/static/image/logo.svg' id='imgLogo'/></a></div>
     <p style='width:251.1px;'>Административная панель<br><br></p>
-  <!--  Текущее количество пользователей бота - {{bot_user}} -->
+    Текущее количество пользователей бота - {{bot_user}}<br><br>
+  <form method="post" action="/UpdateBD">
+    <p style='color: rgb(24,156,217);'>Обновление базы данных</p>
+  Принудительно обновиться список групп и преподавателей, автообновления происходят автоматически ночью. <br><br>
+    <input type='submit' value='Обновить' id='check' />
+    </form>
     <div style='display: inline-block; vertical-align: top; margin:10px;'>
     <br><p style='color: rgb(24,156,217);'>Управление таблицей расписания</p>
-  Инструкция!<br>Если требуется пропуск времени указывайте '-1'.<br> Везде где указано время, необходимо вводить только числа!!! <br><br>
-    <input value='' style='width:100px;' readonly/><input value='Будни' style='width:224px;text-aling:center;' readonly/><input value='Суббота' style='width:224px;text-aling:center;' readonly/> <br>
-    <input value='Заголовок' style='width:100px;' readonly /><input value='Часы' readonly /><input value='Минуты' readonly/><input value='Часы' readonly/><input value='Минуты' readonly/><input value='Часы' readonly/><input value='Минуты' readonly/><input value='Часы' readonly/><input value='Минуты' readonly/> <br>
-<form method="post">
-{% for a in timerasp %}
-<input name='title_{{a.id}}' style='width:100px;' value='{{a.title_column}}'  /><input name='hourUP_b_{{a.id}}' value='{{a.hourUP_b}}' /><input name='minutUP_b_{{a.id}}' value='{{a.minutUP_b}}' /><input name='hourEND_b_{{a.id}}' value='{{a.hourEND_b}}' /><input name='minutEND_b_{{a.id}}' value='{{a.minutEND_b}}' /><input name='hourUP_s_{{a.id}}' value='{{a.hourUP_s}}' /><input name='minutUP_s_{{a.id}}' value='{{a.minutUP_s}}' /><input name='hourEND_s_{{a.id}}' value='{{a.hourEND_s}}' /><input name='minutEND_s_{{a.id}}' value='{{a.minutEND_s}}' /> <br>
-{% endfor %}
-<br>
-        <input type='submit' value='Обновить' id='check' />
-</form>
-</div>
-<div style='display: inline-block; vertical-align: top; margin:10px;'>
-  <br><p style='color: rgb(24,156,217);'>Пример итоговой таблицы</p>
-        <table border=0 id='Zvon'>
-            <tr><td></td><td>будни</td><td class='tdc'   >суббота</td>
-            {% for a in timerasp %}
-              {% if a.title_column == 'перерыв' %}
-                <tr><td class='tdc'>{{a.title_column}}</td><td class='tdc'>{{a.hourUP_b}}<sup>{{a.minutUP_b}}</sup> - {{a.hourEND_b}}<sup>{{a.minutEND_b}}</sup></td><td></td>
-              {% elif a.hourUP_s == '-1' %}
-                <tr><td>{{a.title_column}}</td><td>{{a.hourUP_b}}<sup>{{a.minutUP_b}}</sup> - {{a.hourEND_b}}<sup>{{a.minutEND_b}}</sup></td><td></td>
-              {% else %}
-                <tr><td>{{a.title_column}}</td><td>{{a.hourUP_b}}<sup>{{a.minutUP_b}}</sup> - {{a.hourEND_b}}<sup>{{a.minutEND_b}}</sup></td><td>{{a.hourUP_s}}<sup>{{a.minutUP_s}}</sup> - {{a.hourEND_s}}<sup>{{a.minutEND_s}}</sup></td>
-              {% endif %}
-            {% endfor %}
-          </table>
+  Инструкция!<br>Если требуется пропуск времени указывайте '-1'.<br> Везде где указано время, необходимо вводить только числа!!!<br>Так же каждая новая запись записывается в конец!!! <br><br>
+    <table>
+        <tr><td></td><td>будни</td><td class='tdc'>суббота</td>
+        {% for a in timerasp %}
+        <tr><form method="post" action="/DeleteZvon/{{a.id}}">
+        <tr>
+          {% if a.title_column == 'перерыв' %}
+          <td class='tdc'>{{a.title_column}}{% if a.title_dicription !='-1' %}<br><font size='-1'>{{a.title_dicription}}</font>{% endif %}</td>
+          <td class='tdc'>{% if a.hourUP_b != '-1'%}{{a.hourUP_b}}{% endif %}<sup>{% if a.minutUP_b != '-1' %}{{a.minutUP_b}}{% endif %}</sup>{% if a.hourEND_b != '-1' %} - {{a.hourEND_b}}{% endif %}<sup>{% if a.minutEND_b != '-1' %}{{a.minutEND_b}}{% endif %}</sup></td>
+          <td class='tdc'>{% if a.hourUP_s != '-1'%}{{a.hourUP_s}}{% endif %}<sup>{% if a.minutUP_s != '-1' %}{{a.minutUP_s}}{% endif %}</sup>{% if a.hourEND_s != '-1' %} - {{a.hourEND_s}}{% endif %}<sup>{% if a.minutEND_s != '-1' %}{{a.minutEND_s}}{% endif %}</sup></td>
+          {% else %}
+          <td>{% if a.title_column != '-1' %}{{a.title_column}}{% endif %}{% if a.title_dicription !='-1' %}<br><font size='-1'>{{a.title_dicription}}</font>{% endif %}</td>
+          <td>{% if a.hourUP_b != '-1' %}{{a.hourUP_b}}{% endif %}<sup>{% if a.minutUP_b != '-1' %}{{a.minutUP_b}}{% endif %}</sup>{% if a.hourEND_b != '-1' %} - {{a.hourEND_b}}{% endif %}<sup>{% if a.minutEND_b != '-1' %}{{a.minutEND_b}}{% endif %}</sup></td>
+          <td>{% if a.hourUP_s != '-1' %}{{a.hourUP_s}}{% endif %}<sup>{% if a.minutUP_s != '-1' %}{{a.minutUP_s}}{% endif %}</sup>{% if a.hourEND_s != '-1' %} - {{a.hourEND_s}}{% endif %}<sup>{% if a.minutEND_s != '-1' %}{{a.minutEND_s}}{% endif %}</sup></td>
+          {% endif %}
+        <td><input type='submit' value='Удалить' id='check' /></td>
+        </form></tr>
+        {% endfor %}
+<tr></tr>
+        <tr><form method="post" action="/InsertZvon">
+      <td><input name='title' style='width:100px;' type='text' placeholder='Заголовок' /><br>
+      <input name='titleDiscription' style='width:100px;' type='text' placeholder='Подпись заголовка' /></td>
+      <td><input name='hourUP_b' type='text' placeholder='Часы' />
+      <input name='minutUP_b' type='text' placeholder='Минуты' /><br>
+      <input name='hourEND_b' type='text' placeholder='Часы' />
+      <input name='minutEND_b' type='text' placeholder='Минуты' /></td>
+      <td><input name='hourUP_s' type='text' placeholder='Часы' />
+      <input name='minutUP_s' type='text' placeholder='Минуты' /><br>
+      <input name='hourEND_s' type='text' placeholder='Часы' />
+      <input name='minutEND_s' type='text' placeholder='Минуты' /></td>
+      <td><input type='submit' value='Добавить' id='check' /></td>
+    </form>
+        </tr>
+    </table>
+
+
 </div>
 </div>
 <style>

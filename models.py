@@ -34,14 +34,15 @@ class opk_sotr(db.Model):
 class time(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     title_column = db.Column(db.String(128), nullable=False)
-    hourUP_b = db.Column(db.Integer)
-    minutUP_b = db.Column(db.Integer)
-    hourEND_b = db.Column(db.Integer)
-    minutEND_b = db.Column(db.Integer)
-    hourUP_s = db.Column(db.Integer)
-    minutUP_s = db.Column(db.Integer)
-    hourEND_s = db.Column(db.Integer)
-    minutEND_s = db.Column(db.Integer)
+    hourUP_b = db.Column(db.String(128), nullable=False)
+    minutUP_b = db.Column(db.String(128), nullable=False)
+    hourEND_b = db.Column(db.String(128), nullable=False)
+    minutEND_b = db.Column(db.String(128), nullable=False)
+    hourUP_s = db.Column(db.String(128), nullable=False)
+    minutUP_s = db.Column(db.String(128), nullable=False)
+    hourEND_s = db.Column(db.String(128), nullable=False)
+    minutEND_s = db.Column(db.String(128), nullable=False)
+    title_dicription = db.Column(db.String(128), nullable=False)
 
 @manager.user_loader
 def load_user(user_id):
