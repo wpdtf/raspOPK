@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
+<center>
+
+
+  <div class='content'>
+    <a href={{url_for("index")}}><div id='imageDIV'><img src="/static/image/logo.svg" id='imgLogo'></div></a>
+    <div id='titleF'></div>
+      {%for a in group %}
+          <a href="/rasp/{{a['id']}}" class='textColor'> <div class='group' class='textColor'>{{a['name_group']}}</div></a>
+      {% endfor %}
+  </div>
+
+
+
+</center>
+{% endblock %}
