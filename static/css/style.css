@@ -150,6 +150,7 @@ td {
 @font-face {
   font-family:"Bold";
     src: url('/static/Bold5.otf');
+    font-display: swap;
 }
 
 A {

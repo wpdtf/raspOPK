@@ -147,6 +147,8 @@ def url_error(e):
 def rasp(id):
     links = whatPlatform(request)
     raspgroup = raspTodayGroup(id)
+    if len(raspgroup) == 0:
+        return render_template('404.html', links=links), 404
     raspgroup1 = []
     raspgroup2 = []
     raspgroup3 = []
@@ -164,8 +166,6 @@ def rasp(id):
         elif a[0] == (date.today()+timedelta(days=3)).strftime("%d-%m-%Y"):
             if a[1] in pars_number:
                 raspgroup4.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
-        else:
-            return render_template('404.html', links=links), 404
     group_name = opk_group.query.filter_by(id=id).first()
     return render_template('rasp.html', links=links, raspgroup1=raspgroup1, raspgroup2=raspgroup2, raspgroup3=raspgroup3, raspgroup4=raspgroup4, day1=Days(0), day2=Days(1), day3=Days(2), day4=Days(3), month1=Month(0), month2=Month(1), month3=Month(2), month4=Month(3), group_name=group_name)
 
@@ -173,6 +173,8 @@ def rasp(id):
 def raspprep(id):
     links = whatPlatform(request)
     raspsotr = raspTodaySotr(id)
+    if len(raspsotr) == 0:
+        return render_template('404.html', links=links), 404
     raspsotr1 = []
     raspsotr2 = []
     raspsotr3 = []
@@ -190,8 +192,6 @@ def raspprep(id):
         elif a[0] == (date.today()+timedelta(days=3)).strftime("%d-%m-%Y"):
             if a[1] in pars_number:
                 raspsotr4.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
-        else:
-            return render_template('404.html', links=links), 404
     sotr_name = opk_sotr.query.filter_by(id=id).first()
     return render_template('raspprep.html', links=links, raspsotr1=raspsotr1, raspsotr2=raspsotr2, raspsotr3=raspsotr3, raspsotr4=raspsotr4, day1=Days(0), day2=Days(1), day3=Days(2), day4=Days(3), month1=Month(0), month2=Month(1), month3=Month(2), month4=Month(3), sotr_name=sotr_name)
 

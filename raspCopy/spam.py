@@ -37,10 +37,13 @@ def spamBOT(raspgroupUpdate, day, id):
         sotr = 0
     result = []
     result = bd.sql(f"select * from bot_user where id_group = {id};")
-    print(f"Получены пользователи {result}")
+    print(f"Пользователи получены, начинается отправка")
+    i=0
     if len(result)!=0:
         for a in result:
             spam(raspgroupUpdate, day, a['user_id'], sotr, a['sticker_Update'], a['text_Update'])
+            i+=1
+    print(f'Отправка завершена, отправлено - {i} сообщений')
 
 def spam(raspgroupUpdate, day, id, sotr, stickUpd, textUpd):
     rasp = []
@@ -71,7 +74,7 @@ def spam(raspgroupUpdate, day, id, sotr, stickUpd, textUpd):
             print(f'Ошибка отправки - {id}')
     else:
         try:
-            bot.send_sticker(id, "CAACAgIAAxkBAAEF1t5jI1cnKOUdbnrdvpeue02nI7bM9AACSQADWbv8JdEhPCKZYpwFKQQ")
-            bot.send_message(id, f"Пары {(date.today()+timedelta(days=day)).strftime('%d-%m-%Y')} отменены!", reply_markup = markupRasp)
+            bot.send_sticker(id, stickUpd)
+            bot.send_message(id, f"{textUpd}\nПары {(date.today()+timedelta(days=day)).strftime('%d-%m-%Y')} отменены!", reply_markup = markupRasp)
         except:
             print(f'Ошибка отправки - {id}')
