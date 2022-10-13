@@ -6,6 +6,7 @@ import json
 
 import bd
 import config
+from infoBot import numUpdate
 
 bot = telebot.TeleBot(config.token)
 
@@ -68,12 +69,14 @@ def spam(raspgroupUpdate, day, id, sotr, stickUpd, textUpd):
             else:
                 raspp = raspp + f"\n{a['para']} отменена"
         try:
+            numUpdate()
             bot.send_sticker(id, stickUpd)
             bot.send_message(id, f"{textUpd}\nИзменение в расписании на {(date.today()+timedelta(days=day)).strftime('%d-%m-%Y')} \n{raspp}", reply_markup = markupRasp)
         except:
             print(f'Ошибка отправки - {id}')
     else:
         try:
+            numUpdate()
             bot.send_sticker(id, stickUpd)
             bot.send_message(id, f"{textUpd}\nПары {(date.today()+timedelta(days=day)).strftime('%d-%m-%Y')} отменены!", reply_markup = markupRasp)
         except:

@@ -69,36 +69,35 @@ def groupJson(activTest):
     for a in group:
         id_group = a['id']
         rasp = parsRasp(f"http://172.16.10.131/main.php?p=rasp&act=rtr&grp={id_group}")
-        if activTest:
-            with open(f"groups/group_{id_group}.json") as json_file:
-                rasp_no_update = json.load(json_file)
+        with open(f"groups/group_{id_group}.json") as json_file:
+            rasp_no_update = json.load(json_file)
 
-            if rasp_no_update!=rasp:
-                raspgroup1_no_update = []
-                raspgroup2_no_update = []
+        if rasp_no_update!=rasp:
+            raspgroup1_no_update = []
+            raspgroup2_no_update = []
 
-                raspgroup1_update = []
-                raspgroup2_update = []
-                for a in rasp_no_update:
-                    if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspgroup1_no_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
-                    elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspgroup2_no_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
+            raspgroup1_update = []
+            raspgroup2_update = []
+            for a in rasp_no_update:
+                if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
+                    if a[1] in pars_number:
+                        raspgroup1_no_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
+                elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
+                    if a[1] in pars_number:
+                        raspgroup2_no_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
 
-                for a in rasp:
-                    if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspgroup1_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
-                    elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspgroup2_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
+            for a in rasp:
+                if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
+                    if a[1] in pars_number:
+                        raspgroup1_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
+                elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
+                    if a[1] in pars_number:
+                        raspgroup2_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
 
-                if raspgroup1_no_update!=raspgroup1_update:
-                    spamBOT(rasp, 0, f"{id_group}")
-                if raspgroup2_no_update!=raspgroup2_update:
-                    spamBOT(rasp, 1, f"{id_group}")
+            if raspgroup1_no_update!=raspgroup1_update and activTest:
+                spamBOT(rasp, 0, f"{id_group}")
+            if raspgroup2_no_update!=raspgroup2_update and activTest:
+                spamBOT(rasp, 1, f"{id_group}")
 
         with open(f"groups/group_{id_group}.json", 'w') as file:
             json.dump(rasp, file, indent=4, ensure_ascii=False)
@@ -110,36 +109,35 @@ def sotrJson(activTest):
     for a in sotr:
         id_sotr = a['id']
         rasp = parsRasp(f"http://172.16.10.131/main.php?p=rasp&act=rtr&sot={id_sotr}")
-        if activTest:
-            with open(f"sotr/sotr{id_sotr}.json") as json_file:
-                rasp_no_update = json.load(json_file)
+        with open(f"sotr/sotr{id_sotr}.json") as json_file:
+            rasp_no_update = json.load(json_file)
 
-            if rasp_no_update!=rasp:
-                raspsotr1_no_update = []
-                raspsotr2_no_update = []
+        if rasp_no_update!=rasp:
+            raspsotr1_no_update = []
+            raspsotr2_no_update = []
 
-                raspsotr1_update = []
-                raspsotr2_update = []
-                for a in rasp_no_update:
-                    if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspsotr1_no_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
-                    elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspsotr2_no_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
+            raspsotr1_update = []
+            raspsotr2_update = []
+            for a in rasp_no_update:
+                if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
+                    if a[1] in pars_number:
+                        raspsotr1_no_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
+                elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
+                    if a[1] in pars_number:
+                        raspsotr2_no_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
 
-                for a in rasp:
-                    if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspsotr1_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
-                    elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspsotr2_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
+            for a in rasp:
+                if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
+                    if a[1] in pars_number:
+                        raspsotr1_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
+                elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
+                    if a[1] in pars_number:
+                        raspsotr2_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
 
-                if raspsotr1_no_update!=raspsotr1_update:
-                    spamBOT(rasp, 0, f"9999{id_sotr}")
-                if raspsotr2_no_update!=raspsotr2_update:
-                    spamBOT(rasp, 1, f"9999{id_sotr}")
+            if raspsotr1_no_update!=raspsotr1_update and activTest:
+                spamBOT(rasp, 0, f"9999{id_sotr}")
+            if raspsotr2_no_update!=raspsotr2_update and activTest:
+                spamBOT(rasp, 1, f"9999{id_sotr}")
 
         with open(f"sotr/sotr{id_sotr}.json", 'w') as file:
             json.dump(rasp, file, indent=4, ensure_ascii=False)
