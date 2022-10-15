@@ -23,6 +23,7 @@ pars_number = [
 "9"
 ]
 
+#bot = telebot.TeleBot("5220654021:AAGu5TgZwwgPVVh94Ppcr7qkD9Z9XXO8a8o")
 bot = telebot.TeleBot(config.token)
 
 markupNone = types.InlineKeyboardMarkup(row_width=1)
@@ -366,6 +367,7 @@ def googleRasp(message):
                     bot.send_message(message.chat.id, f"Расписание - {textUser} \n\n{raspp1}\n\n{raspp2}", reply_markup = markupRasp)
                 else:
                     numMessage()
+                    bot.send_sticker(message.chat.id, userI['sticker_Google'])
                     bot.send_message(message.chat.id, f"Пар у {textUser} нет.", reply_markup = markupRasp)
             elif len(resultSotr)==1:
                 raspsotr = todaySotr(resultSotr[0]['id'], message)
@@ -404,6 +406,7 @@ def googleRasp(message):
                     bot.send_message(message.chat.id, f"Расписание - {textUser} \n\n{raspp1}\n\n{raspp2}", reply_markup = markupRasp)
                 else:
                     numMessage()
+                    bot.send_sticker(message.chat.id, userI['sticker_Google'])
                     bot.send_message(message.chat.id, f"Пар у {textUser} нет.", reply_markup = markupRasp)
     except BaseException as errors:
         numMessage()
@@ -474,6 +477,7 @@ def googleRasp2(message):
                     bot.send_message(message.chat.id, f"Расписание - {textUser} \n\n{raspp1}\n\n{raspp2}", reply_markup = markupRasp)
                 else:
                     numMessage()
+                    bot.send_sticker(message.chat.id, userI['sticker_Google'])
                     bot.send_message(message.chat.id, f"Пар у {textUser} нет.", reply_markup = markupRasp)
             elif len(resultSotr)==1:
                 raspsotr = todaySotr(resultSotr[0]['id'], message)
@@ -512,6 +516,7 @@ def googleRasp2(message):
                     bot.send_message(message.chat.id, f"Расписание - {textUser} \n\n{raspp1}\n\n{raspp2}", reply_markup = markupRasp)
                 else:
                     numMessage()
+                    bot.send_sticker(message.chat.id, userI['sticker_Google'])
                     bot.send_message(message.chat.id, f"Пар у {textUser} нет.", reply_markup = markupRasp)
     except BaseException as errors:
         numMessage()
@@ -550,8 +555,7 @@ def todaySotr(idSotr, message):
         with open(f"sotr/sotr{idSotr}.json") as json_file:
             rasp = json.load(json_file)
     except:
-        numMessage()
-        bot.send_message(message.chat.id, f"В расписании этого нет.", reply_markup = markupRasp)
+        return []
     else:
         if rasp is not None:
             return rasp
@@ -564,8 +568,7 @@ def todayGroup(idGroup, message):
         with open(f"groups/group_{idGroup}.json") as json_file:
             rasp = json.load(json_file)
     except:
-        numMessage()
-        bot.send_message(message.chat.id, f"В расписании этого нет.", reply_markup = markupRasp)
+        return []
     else:
         if rasp is not None:
             return rasp
@@ -599,6 +602,7 @@ def raspTodaySotr(message, idSotr, day):
             bot.send_message(message.chat.id, f"{(date.today()+timedelta(days=day)).strftime('%d-%m-%Y')} \n{raspp}", reply_markup = markupRasp)
         else:
             numMessage()
+            bot.send_sticker(message.chat.id, userI['sticker_ToDay'])
             bot.send_message(message.chat.id, f"Пар нет.", reply_markup = markupRasp)
     except BaseException as errors:
         numMessage()
@@ -635,6 +639,7 @@ def raspTodayGroup(message, idGroup, day):
             bot.send_message(message.chat.id, f"{(date.today()+timedelta(days=day)).strftime('%d-%m-%Y')} \n{raspp}", reply_markup = markupRasp)
         else:
             numMessage()
+            bot.send_sticker(message.chat.id, userI['sticker_ToDay'])
             bot.send_message(message.chat.id, f"Пар нет.", reply_markup = markupRasp)
     except BaseException as errors:
         numMessage()
