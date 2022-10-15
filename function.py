@@ -33,7 +33,7 @@ def raspTodaySotr(idSotr):
         with open(f"raspCopy/sotr/sotr{idSotr}.json") as json_file:
             rasp = json.load(json_file)
     except:
-        return render_template('404.html'), 404
+        return []
     else:
         return rasp
 
@@ -42,7 +42,7 @@ def raspTodayGroup(idGroup):
         with open(f"raspCopy/groups/group_{idGroup}.json") as json_file:
             rasp = json.load(json_file)
     except:
-        return render_template('404.html'), 404
+        return []
     else:
         return rasp
 
