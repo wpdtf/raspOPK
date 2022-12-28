@@ -32,6 +32,7 @@
 
 <html lang="ru">
 <head>
+    <script src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -164,6 +165,32 @@ function getCookie(name) {
      }
   };
 </script>
+
+<script src="/static/jsScript/jSnow.js"></script>
+
+<script>
+var date = new Date();
+date = date.getMonth();
+
+if (date == 0 || date == 1 || date == 11)
+{
+  $(document).ready(function() {
+		$("body").jSnow({
+			vSize: document.documentElement.scrollHeight-100, // Размер области
+			flakes: 35, // Количество снежинок
+			flakeColor: ["#b3deff"], // Цвет
+			flakeMinSize: 10, // Минимальный размер снежинки
+			flakeMaxSize: 20, // Максимальный размер снежинки
+			fallingSpeedMin: 2, // Минимальная скорость снежинки
+			fallingSpeedMax: 5, // Максимальная скорость снежинки
+			flakeCode:["&bull;", "*"] // Вид снежинки
+		});
+
+	});
+}
+
+</script>
+
 <!--
 wpdtf
 

@@ -1,6 +1,21 @@
 body {
   font-family:"Bold";
+}
 
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: rgb(24,156,217);
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  background-color: #1a1a1a;
 }
 
 input {
