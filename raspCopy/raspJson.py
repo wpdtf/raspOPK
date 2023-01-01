@@ -7,8 +7,8 @@ from datetime import timedelta, date, datetime
 from bs4 import BeautifulSoup
 
 from bd import sql
-from spam import spamBOT
-from CopyFull import f1
+from spam import spamRaspGroup, spamRaspSotr
+#from CopyFull import f1
 
 pars_number = [
 "1",
@@ -52,7 +52,7 @@ def parsRasp(url):
         for b in columns:
             line = b.find_all("td")
             rasp.append([
-            (date.today()+timedelta(days=i)).strftime("%d-%m-%Y"),
+            (date.today()+timedelta(days=i)).strftime("%Y-%m-%d"),
             line[0].text,
             line[1].text,
             line[2].text,
@@ -62,91 +62,73 @@ def parsRasp(url):
 
     return rasp
 
-def groupJson(activTest):
-    group = sql(f"SELECT id FROM opk_group;")
-
+def groupJson(WhatUpdate):
+    group = sql(f"SELECT id, name_group FROM opk_group;")
 
     for a in group:
         id_group = a['id']
-        rasp = parsRasp(f"http://172.16.10.131/main.php?p=rasp&act=rtr&grp={id_group}")
-        try:
-            with open(f"groups/group_{id_group}.json") as json_file:
-                rasp_no_update = json.load(json_file)
-        except:
-            rasp_no_update = []
-        else:
-            if rasp_no_update!=rasp:
-                raspgroup1_no_update = []
-                raspgroup2_no_update = []
+        raspPars = parsRasp(f"http://172.16.10.131/main.php?p=rasp&act=rtr&grp={id_group}")
+        raspNew = []
+        for a in raspPars:
+            if a[1] in pars_number:
+                    raspNew.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3], 'dateText' : a[0]})
 
-                raspgroup1_update = []
-                raspgroup2_update = []
-                for a in rasp_no_update:
-                    if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspgroup1_no_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
-                    elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspgroup2_no_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
 
-                for a in rasp:
-                    if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspgroup1_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
-                    elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspgroup2_update.append({'para' : a[1], 'disc' : a[2], 'aud' : a[4], 'sotr' : a[3]})
+        raspOld = sql(f"select para, disc, aud, sotr, dateText from opk_rasp_group_pars where id={id_group}")
 
-                if raspgroup1_no_update!=raspgroup1_update and activTest:
-                    spamBOT(rasp, 0, f"{id_group}")
-                if raspgroup2_no_update!=raspgroup2_update and activTest:
-                    spamBOT(rasp, 1, f"{id_group}")
+        if raspNew!=raspOld:
+            sql(f"delete from opk_rasp_group_pars where id={id_group}")
+            for a in raspNew:
+                sql(f"insert into opk_rasp_group_pars values ({id_group},'{a['para']}','{a['disc']}','{a['aud']}','{a['sotr']}', '{a['dateText']}');")
 
-        with open(f"groups/group_{id_group}.json", 'w') as file:
-            json.dump(rasp, file, indent=4, ensure_ascii=False)
+            for a in range(0, 2):
+                raspWhatMessageNew = []
+                for b in raspNew:
+                    if b['dateText'] == (date.today()+timedelta(days=a)).strftime("%Y-%m-%d"):
+                        raspWhatMessageNew.append({'para' : b['para'], 'disc' : b['disc'], 'aud' : b['aud'], 'sotr' : b['sotr'], 'dateText' : b['dateText']})
+
+                raspWhatMessageOld = []
+                for b in raspOld:
+                    if b['dateText'] == (date.today()+timedelta(days=a)).strftime("%Y-%m-%d"):
+                        raspWhatMessageOld.append({'para' : b['para'], 'disc' : b['disc'], 'aud' : b['aud'], 'sotr' : b['sotr'], 'dateText' : b['dateText']})
+
+                if (raspWhatMessageNew != raspWhatMessageOld) and WhatUpdate:
+                    spamRaspGroup(raspWhatMessageNew, id_group, a)
         time.sleep(1)
 
-def sotrJson(activTest):
+
+def sotrJson(WhatUpdate):
     sotr = sql(f"SELECT id FROM opk_sotr;")
 
     for a in sotr:
         id_sotr = a['id']
-        rasp = parsRasp(f"http://172.16.10.131/main.php?p=rasp&act=rtr&sot={id_sotr}")
-        try:
-            with open(f"sotr/sotr{id_sotr}.json") as json_file:
-                rasp_no_update = json.load(json_file)
-        except:
-            rasp_no_update = []
-        else:
-            if rasp_no_update!=rasp:
-                raspsotr1_no_update = []
-                raspsotr2_no_update = []
+        raspPars = parsRasp(f"http://172.16.10.131/main.php?p=rasp&act=rtr&sot={id_sotr}")
+        raspNew = []
+        for a in raspPars:
+            if a[1] in pars_number:
+                    raspNew.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'groupName' : a[2], 'dateText' : a[0]})
 
-                raspsotr1_update = []
-                raspsotr2_update = []
-                for a in rasp_no_update:
-                    if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspsotr1_no_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
-                    elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspsotr2_no_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
 
-                for a in rasp:
-                    if a[0] == (date.today()+timedelta(days=0)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspsotr1_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
-                    elif a[0] == (date.today()+timedelta(days=1)).strftime("%d-%m-%Y"):
-                        if a[1] in pars_number:
-                            raspsotr2_update.append({'para' : a[1], 'disc' : a[3], 'aud' : a[4], 'name_group' : a[2]})
+        raspOld = sql(f"select para, disc, aud, groupName, dateText from opk_rasp_sotr_pars where id={id_sotr}")
 
-                if raspsotr1_no_update!=raspsotr1_update and activTest:
-                    spamBOT(rasp, 0, f"9999{id_sotr}")
-                if raspsotr2_no_update!=raspsotr2_update and activTest:
-                    spamBOT(rasp, 1, f"9999{id_sotr}")
+        if raspNew!=raspOld:
+            sql(f"delete from opk_rasp_sotr_pars where id={id_sotr}")
+            for a in raspNew:
+                sql(f"insert into opk_rasp_sotr_pars values ({id_sotr},'{a['para']}','{a['disc']}','{a['aud']}','{a['groupName']}', '{a['dateText']}');")
 
-        with open(f"sotr/sotr{id_sotr}.json", 'w') as file:
-            json.dump(rasp, file, indent=4, ensure_ascii=False)
+            for a in range(0, 2):
+                raspWhatMessageNew = []
+                for b in raspNew:
+                    if b['dateText'] == (date.today()+timedelta(days=a)).strftime("%Y-%m-%d"):
+                        raspWhatMessageNew.append({'para' : b['para'], 'disc' : b['disc'], 'aud' : b['aud'], 'groupName' : b['groupName'], 'dateText' : b['dateText']})
+
+                raspWhatMessageOld = []
+                for b in raspOld:
+                    if b['dateText'] == (date.today()+timedelta(days=a)).strftime("%Y-%m-%d"):
+                        raspWhatMessageOld.append({'para' : b['para'], 'disc' : b['disc'], 'aud' : b['aud'], 'groupName' : b['groupName'], 'dateText' : b['dateText']})
+
+                if (raspWhatMessageNew != raspWhatMessageOld) and WhatUpdate:
+                    spamRaspSotr(raspWhatMessageNew, '9999'+str(id_sotr), a)
         time.sleep(1)
 
 
@@ -171,10 +153,6 @@ def funcCopy():
                 sotrJson(True)
                 time.sleep(1800)
             elif 5>= hours >3:
-                shutil.rmtree('groups/')
-                shutil.rmtree('sotr/')
-                os.mkdir("groups")
-                os.mkdir("sotr")
                 groupJson(False)
                 sotrJson(False)
                 f1()
@@ -182,10 +160,6 @@ def funcCopy():
             else:
                 time.sleep(1800)
         except:
-            shutil.rmtree('groups/')
-            shutil.rmtree('sotr/')
-            os.mkdir("groups")
-            os.mkdir("sotr")
             groupJson(False)
             sotrJson(False)
             f1()

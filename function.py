@@ -1,6 +1,7 @@
 from werkzeug.exceptions import abort
 from flask import Flask, render_template
 from datetime import datetime, timedelta, date
+from bd import sql
 import json
 
 
@@ -30,21 +31,18 @@ def whatPlatform(request):
 def raspTodaySotr(idSotr):
     try:
         rasp = []
-        with open(f"raspCopy/sotr/sotr{idSotr}.json") as json_file:
-            rasp = json.load(json_file)
+        rasp = sql(f"select para, disc, aud, groupName, dateText from opk_rasp_sotr_pars where id={idSotr} ORDER BY dateText, para;")
+        return rasp
     except:
         return []
-    else:
-        return rasp
 
 def raspTodayGroup(idGroup):
     try:
-        with open(f"raspCopy/groups/group_{idGroup}.json") as json_file:
-            rasp = json.load(json_file)
+        rasp =[]
+        rasp = sql(f"select para, disc, aud, sotr, dateText from opk_rasp_group_pars where id={idGroup} ORDER BY dateText, para;")
+        return rasp
     except:
         return []
-    else:
-        return rasp
 
 def Days(day):
     day = int((datetime.now()+timedelta(days=day)).strftime("%d"))
