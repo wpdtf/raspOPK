@@ -1,17 +1,16 @@
 .textColor {
-  color:rgb(95,92,93);
-  background-color: white;
-  font-family:"Bold";
+  color:rgb(80,85,105);
+  background-color: rgb(255,255,255);
 }
 
 A {
-    color:rgb(95,92,93); /* Цвет ссылок */
+    color:rgb(80,85,105); /* Цвет ссылок */
    }
 A:visited {
-    color:rgb(95,92,93); /* Цвет посещенных ссылок */
+    color:rgb(80,85,105); /* Цвет посещенных ссылок */
    }
 A:active {
-    color:rgb(95,92,93); /* Цвет активных ссылок */
+    color:rgb(80,85,105); /* Цвет активных ссылок */
    }
 a.text {
   text-decoration: none;}

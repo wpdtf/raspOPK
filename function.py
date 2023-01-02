@@ -44,6 +44,14 @@ def raspTodayGroup(idGroup):
     except:
         return []
 
+def raspTodayAud(Aud):
+    try:
+        rasp = []
+        rasp = sql(f"select aud, para, dateText, sotr, opk_group.name_group, disc from opk_group, opk_rasp_group_pars, opk_aud where opk_rasp_group_pars.id=opk_group.id and aud=opk_aud.name and opk_aud.id={Aud} ORDER BY dateText, para;")
+        return rasp
+    except:
+        return []
+
 def Days(day):
     day = int((datetime.now()+timedelta(days=day)).strftime("%d"))
     return day

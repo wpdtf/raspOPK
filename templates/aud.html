@@ -4,10 +4,10 @@
 
     <div class='content'>
       <a href={{url_for("index")}}><div id='imageDIV'><img src="/static/image/LogoNewBlack.svg" id='imgLogo'></div></a>
-      <div id='titleF'>Преподаватели</div>
-        {% for a in sotr %}
-             <a href="/raspprep/{{a['id']}}" class='textColor'><div class='prep' class='textColor'>{{a['name']}}</div>      </a>
-        {% endfor %}
+      <div id='titleF'>Аудитории</div>
+      {%for a in auds %}
+          <a href="/raspAud/{{a['id']}}" class='textColor'> <div class='group' class='textColor'>{{a['name']}}</div></a>
+      {% endfor %}
     </div>
 
 

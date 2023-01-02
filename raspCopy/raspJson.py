@@ -81,7 +81,7 @@ def groupJson(WhatUpdate):
             for a in raspNew:
                 sql(f"insert into opk_rasp_group_pars values ({id_group},'{a['para']}','{a['disc']}','{a['aud']}','{a['sotr']}', '{a['dateText']}');")
 
-            for a in range(0, 2):
+            for a in range(0, 3):
                 raspWhatMessageNew = []
                 for b in raspNew:
                     if b['dateText'] == (date.today()+timedelta(days=a)).strftime("%Y-%m-%d"):
@@ -116,7 +116,7 @@ def sotrJson(WhatUpdate):
             for a in raspNew:
                 sql(f"insert into opk_rasp_sotr_pars values ({id_sotr},'{a['para']}','{a['disc']}','{a['aud']}','{a['groupName']}', '{a['dateText']}');")
 
-            for a in range(0, 2):
+            for a in range(0, 3):
                 raspWhatMessageNew = []
                 for b in raspNew:
                     if b['dateText'] == (date.today()+timedelta(days=a)).strftime("%Y-%m-%d"):

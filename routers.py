@@ -1,9 +1,9 @@
-from flask import Flask, render_template, url_for, request, redirect, url_for, flash
+from flask import Flask, render_template, url_for, request, redirect, url_for, flash, send_from_directory
 from datetime import datetime, timedelta, date
 from flask_login import login_required, login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from function import raspTodaySotr, raspTodayGroup, Days, Month, pars_number, whatPlatform
+from function import raspTodaySotr, raspTodayGroup, raspTodayAud, Days, Month, pars_number, whatPlatform
 from __init__ import app, db
 from models import opk_spec, opk_aud, opk_sotr, opk_group, admins_sait, time, bot_user
 from raspCopy.CopyFull import f1
@@ -59,9 +59,16 @@ def index():
 def groupa(id):
     links = whatPlatform(request)
     groupa = opk_group.query.filter_by(id_spec=id).all()
+    spec = opk_spec.query.filter_by(id=id).first()
     if len(groupa) == 0:
         return render_template('404.html', links=links), 404
-    return render_template('group.html', group = groupa, links=links)
+    return render_template('group.html', group = groupa, specs=spec, links=links)
+
+@app.route('/aud')
+def aud():
+    links = whatPlatform(request)
+    auds = opk_aud.query.order_by(opk_aud.name).all()
+    return render_template('aud.html', auds=auds, links=links)
 
 @app.route('/UpdateBD', methods=['POST', 'GET'])
 def UpdateBD():
@@ -164,6 +171,28 @@ def rasp(id):
     group_name = opk_group.query.filter_by(id=id).first()
     return render_template('rasp.html', links=links, raspgroup1=raspgroup1, raspgroup2=raspgroup2, raspgroup3=raspgroup3, raspgroup4=raspgroup4, day1=Days(0), day2=Days(1), day3=Days(2), day4=Days(3), month1=Month(0), month2=Month(1), month3=Month(2), month4=Month(3), group_name=group_name)
 
+@app.route('/raspAud/<int:id>')
+def raspAud(id):
+    links = whatPlatform(request)
+    raspgroup = raspTodayAud(id)
+    raspgroup1 = []
+    raspgroup2 = []
+    raspgroup3 = []
+    raspgroup4 = []
+    for a in raspgroup:
+        if a['dateText'] == (date.today()+timedelta(days=0)).strftime("%Y-%m-%d"):
+            raspgroup1.append({'para' : a['para'], 'disc' : a['disc'], 'name_group' : a['name_group'], 'sotr' : a['sotr']})
+        elif a['dateText'] == (date.today()+timedelta(days=1)).strftime("%Y-%m-%d"):
+            raspgroup2.append({'para' : a['para'], 'disc' : a['disc'], 'name_group' : a['name_group'], 'sotr' : a['sotr']})
+        elif a['dateText'] == (date.today()+timedelta(days=2)).strftime("%Y-%m-%d"):
+            raspgroup3.append({'para' : a['para'], 'disc' : a['disc'], 'name_group' : a['name_group'], 'sotr' : a['sotr']})
+        elif a['dateText'] == (date.today()+timedelta(days=3)).strftime("%Y-%m-%d"):
+            raspgroup4.append({'para' : a['para'], 'disc' : a['disc'], 'name_group' : a['name_group'], 'sotr' : a['sotr']})
+
+    group_name = opk_aud.query.filter_by(id=id).first()
+    return render_template('raspaud.html', links=links, raspgroup1=raspgroup1, raspgroup2=raspgroup2, raspgroup3=raspgroup3, raspgroup4=raspgroup4, day1=Days(0), day2=Days(1), day3=Days(2), day4=Days(3), month1=Month(0), month2=Month(1), month3=Month(2), month4=Month(3), group_name=group_name)
+
+
 @app.route('/raspprep/<int:id>')
 def raspprep(id):
     links = whatPlatform(request)
@@ -184,6 +213,7 @@ def raspprep(id):
             raspsotr4.append({'para' : a['para'], 'disc' : a['disc'], 'aud' : a['aud'], 'name_group' : a['groupName']})
     sotr_name = opk_sotr.query.filter_by(id=id).first()
     return render_template('raspprep.html', links=links, raspsotr1=raspsotr1, raspsotr2=raspsotr2, raspsotr3=raspsotr3, raspsotr4=raspsotr4, day1=Days(0), day2=Days(1), day3=Days(2), day4=Days(3), month1=Month(0), month2=Month(1), month3=Month(2), month4=Month(3), sotr_name=sotr_name)
+
 
 
 @app.after_request

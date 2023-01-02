@@ -12,23 +12,23 @@
   </script>
 
   <div class='content'>
-    <div id='imageDIV'><img src="/static/image/logo.svg" id='imgLogo'></div>
+    <div id='imageDIV'><img src="/static/image/LogoNewBlack.svg" id='imgLogo'></div>
     <div id='titleDIV1'>Расписание ОПК</div>
     <div class='content2'>
       <table border=0 id='Zvon'>
           <tr><td colspan="3" class='Ftime'> {{ day }} {{ month }}{{ today }} {{ para }} </td></tr>
           <tr><td colspan="3" class='Ftime'>{{ date_end }}</td></tr>
-          <tr><td></td><td>будни</td><td class='tdc'>суббота</td>
+          <tr><td class="zvonTB"></td><td class="zvonTB">будни</td><td class='tdc zvonTB'>суббота</td>
           {% for a in timerasp %}
           <tr>
             {% if a.title_column == 'перерыв' %}
-            <td class='tdc'>{{a.title_column}}{% if a.title_dicription !='-1' %}<br><font size='-1'>{{a.title_dicription}}</font>{% endif %}</td>
-            <td class='tdc'>{% if a.hourUP_b != '-1'%}{{a.hourUP_b}}{% endif %}<sup>{% if a.minutUP_b != '-1' %}{{a.minutUP_b}}{% endif %}</sup>{% if a.hourEND_b != '-1' %} - {{a.hourEND_b}}{% endif %}<sup>{% if a.minutEND_b != '-1' %}{{a.minutEND_b}}{% endif %}</sup></td>
-            <td class='tdc'>{% if a.hourUP_s != '-1'%}{{a.hourUP_s}}{% endif %}<sup>{% if a.minutUP_s != '-1' %}{{a.minutUP_s}}{% endif %}</sup>{% if a.hourEND_s != '-1' %} - {{a.hourEND_s}}{% endif %}<sup>{% if a.minutEND_s != '-1' %}{{a.minutEND_s}}{% endif %}</sup></td>
+            <td class='tdc zvonTB'>{{a.title_column}}{% if a.title_dicription !='-1' %}<br><font size='-1'>{{a.title_dicription}}</font>{% endif %}</td>
+            <td class='tdc zvonTB'>{% if a.hourUP_b != '-1'%}{{a.hourUP_b}}{% endif %}<sup>{% if a.minutUP_b != '-1' %}{{a.minutUP_b}}{% endif %}</sup>{% if a.hourEND_b != '-1' %} - {{a.hourEND_b}}{% endif %}<sup>{% if a.minutEND_b != '-1' %}{{a.minutEND_b}}{% endif %}</sup></td>
+            <td class='tdc zvonTB'>{% if a.hourUP_s != '-1'%}{{a.hourUP_s}}{% endif %}<sup>{% if a.minutUP_s != '-1' %}{{a.minutUP_s}}{% endif %}</sup>{% if a.hourEND_s != '-1' %} - {{a.hourEND_s}}{% endif %}<sup>{% if a.minutEND_s != '-1' %}{{a.minutEND_s}}{% endif %}</sup></td>
             {% else %}
-            <td>{% if a.title_column != '-1' %}{{a.title_column}}{% endif %}{% if a.title_dicription !='-1' %}<br><font size='-1'>{{a.title_dicription}}</font>{% endif %}</td>
-            <td>{% if a.hourUP_b != '-1' %}{{a.hourUP_b}}{% endif %}<sup>{% if a.minutUP_b != '-1' %}{{a.minutUP_b}}{% endif %}</sup>{% if a.hourEND_b != '-1' %} - {{a.hourEND_b}}{% endif %}<sup>{% if a.minutEND_b != '-1' %}{{a.minutEND_b}}{% endif %}</sup></td>
-            <td>{% if a.hourUP_s != '-1' %}{{a.hourUP_s}}{% endif %}<sup>{% if a.minutUP_s != '-1' %}{{a.minutUP_s}}{% endif %}</sup>{% if a.hourEND_s != '-1' %} - {{a.hourEND_s}}{% endif %}<sup>{% if a.minutEND_s != '-1' %}{{a.minutEND_s}}{% endif %}</sup></td>
+            <td class="zvonTB">{% if a.title_column != '-1' %}{{a.title_column}}{% endif %}{% if a.title_dicription !='-1' %}<br><font size='-1'>{{a.title_dicription}}</font>{% endif %}</td>
+            <td class="zvonTB">{% if a.hourUP_b != '-1' %}{{a.hourUP_b}}{% endif %}<sup>{% if a.minutUP_b != '-1' %}{{a.minutUP_b}}{% endif %}</sup>{% if a.hourEND_b != '-1' %} - {{a.hourEND_b}}{% endif %}<sup>{% if a.minutEND_b != '-1' %}{{a.minutEND_b}}{% endif %}</sup></td>
+            <td class="zvonTB">{% if a.hourUP_s != '-1' %}{{a.hourUP_s}}{% endif %}<sup>{% if a.minutUP_s != '-1' %}{{a.minutUP_s}}{% endif %}</sup>{% if a.hourEND_s != '-1' %} - {{a.hourEND_s}}{% endif %}<sup>{% if a.minutEND_s != '-1' %}{{a.minutEND_s}}{% endif %}</sup></td>
             {% endif %}
           </tr>
           {% endfor %}
@@ -42,6 +42,7 @@
 {% for a in spec %}   <a href="/group/{{a['id']}}" class='textColor'><div class='spec' class='textColor'>{{a['nameSize']}}</div></a> {% endfor %}
 
      <a href="/prep" class='textColor'> <div class='prep' class='textColor'>ПРЕПОДАВАТЕЛИ</div></a>
+     <a href="/aud" class='textColor'> <div class='prep' class='textColor'>АУДИТОРИИ</div></a>
 </div>
   </div>
 </center>

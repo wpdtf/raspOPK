@@ -37,7 +37,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" type="image/x-icon" href="/static/image/logo.ico">
+    <link rel="icon" type="image/x-icon" href="/static/image/LogoNewIco.ico">
     <link rel='stylesheet' href='{{links}}'>
     <link rel="stylesheet" type="text/css" href="/static/css/darkTems.css" id="theme-link">
     <title>{% block title %} Расписание ОПК {% endblock %}</title>
@@ -138,7 +138,7 @@ function getCookie(name) {
    function fBlack() {
      tems=1;
      let darkTheme = "/static/css/darkTems.css";
-     document.getElementById('imgLogo').src = '/static/image/logoNigct.svg';
+     document.getElementById('imgLogo').src = '/static/image/LogoNewBlack.svg';
      document.getElementById('imgTems').src = '/static/image/tems.svg';
      link.setAttribute("href", darkTheme);
      var date = new Date;
@@ -149,7 +149,7 @@ function getCookie(name) {
    function fWhite() {
      tems=2;
      let lightTheme = "/static/css/lightTems.css";
-     document.getElementById('imgLogo').src = '/static/image/logo.svg';
+     document.getElementById('imgLogo').src = '/static/image/LogoNewWhite.svg';
      document.getElementById('imgTems').src = '/static/image/temsNight.svg';
      link.setAttribute("href", lightTheme);
      var date = new Date;
@@ -178,7 +178,7 @@ if (date == 0 || date == 1 || date == 11)
 		$("body").jSnow({
 			vSize: document.documentElement.scrollHeight-100, // Размер области
 			flakes: 35, // Количество снежинок
-			flakeColor: ["#b3deff"], // Цвет
+			flakeColor: ["#37ebff"], // Цвет
 			flakeMinSize: 10, // Минимальный размер снежинки
 			flakeMaxSize: 20, // Максимальный размер снежинки
 			fallingSpeedMin: 2, // Минимальная скорость снежинки

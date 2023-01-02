@@ -4,11 +4,13 @@
 
 
   <div class='content'>
-    <a href={{url_for("index")}}><div id='imageDIV'><img src="/static/image/logo.svg" id='imgLogo'></div></a>
-    <div id='titleF'></div>
+    <a href={{url_for("index")}}><div id='imageDIV'><img src="/static/image/LogoNewBlack.svg" id='imgLogo'></div></a>
+    <div id='titleF'>{{specs.nameSize}}</div>
+
       {%for a in group %}
           <a href="/rasp/{{a['id']}}" class='textColor'> <div class='group' class='textColor'>{{a['name_group']}}</div></a>
       {% endfor %}
+      <div id='titleS'>{{specs.name}}</div>
   </div>
 
 

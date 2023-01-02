@@ -1,7 +1,6 @@
 .textColor {
-  color:#dbdbdb;
-  background-color: #1a1a1a;
-  font-family:"Bold";
+  color: rgb(255,255,255);
+  background-color: rgb(10,30,100);
 }
 
 A {

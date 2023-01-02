@@ -1,39 +1,44 @@
+@font-face {
+  font-family: "TTNorms-Medium";
+  font-display: swap;
+  src: local("TTNorms-Medium"),
+       url("/static/TTNorms-Medium.woff2") format("woff2"),
+       url("/static/TTNorms-Medium.woff") format("woff");
+}
+
 html {
 -webkit-text-size-adjust: none;
 }
 
 body {
-  font-family:"Bold";
-
+  font-family: "TTNorms-Medium", "Tahoma", sans-serif;
+  font-size: 18px;
 }
 
 #imgLogo {
-  height: 143px;
+  height: 120px;
 }
 
 input {
-  font-family:"Bold";
-
+  font-family:Tahoma;
 }
 
 form {
-
-  font-size: 30px;
+  font-size: 31px;
 }
 
 #button {
-  font-family:"Bold";
+  font-family:Tahoma;
   background-color: white;
 }
 
 .avtorization {
   width: 251.1px;
-  font-family:"Bold";
+  font-family:Tahoma;
   padding: 7px;
   margin: 10px;
   margin-top: 20px;
-  border: 5px solid rgb(24,156,217);
-
+  border: 5px solid rgb(5,65,240);
   font-size: 30px;
   outline: none;
   border-radius: 15px;
@@ -60,29 +65,36 @@ div {
 
 }
 
-.maxR {
-  word-wrap:break-word;
-  width:150px;
-  padding-left: 20px;
-  padding-right: 20px;
-  padding-top: 2%;
-}
 
 #titleDate {
-  font-size: 16px;
   padding-top: 4%;
 }
 
 .rasp {
-  border: 4px solid rgb(24,156,217);
+  border: 4px solid rgb(5,65,240);
   border-radius: 20px;
-  padding:10px;
-font-size:11px;
+  padding: 4px;
+  display: inline-block;
+}
+
+.raspTB {
+  padding: 3px;
+}
+
+.maxR {
+  word-wrap:break-word;
 }
 
 #titleF {
-  font-size: 21px;
-  line-height: 100px;
+  line-height: 40px;
+  font-size: 26px;
+}
+
+#titleS {
+  width: 270px;
+  margin-top: 10%;
+  line-height: 20px;
+  font-size: 15px;
 }
 
 #titleDIV2 {
@@ -90,7 +102,7 @@ font-size:11px;
 }
 
 #titleDIV1 {
-  font-size: 22px;
+  font-size: 35px;
   margin-top: 5%;
 }
 
@@ -98,24 +110,26 @@ font-size:11px;
   margin-left: 3%;
   margin-right: 3%;
   vertical-align: top;
-  width:370px;
+  width:350px;
 }
 
 .tdc {
-  color:rgb(24,156,217);
+  color:rgb(5,65,240);
 }
 
-td {
+.zvonTB {
   padding-top: 10px;
   padding-left: 5px;
   padding-right: 5px;
-  font-size: 20;
+}
+
+td {
   text-align: center;
 }
 
 .spec {
   text-decoration: none;
-  border: 4px solid rgb(24,156,217);
+  border: 4px solid rgb(5,65,240);
   width:125px;
   font-size: 30;
   display: inline-block;
@@ -127,9 +141,8 @@ td {
 
 .prep {
   text-decoration: none;
-  border: 4px solid rgb(24,156,217);
+  border: 4px solid rgb(5,65,240);
   width:290px;
-  font-size: 30;
   margin:10px;
   border-radius: 20px;
   margin-top: 15px;
@@ -138,9 +151,8 @@ td {
 
 .group {
   text-decoration: none;
-  border: 4px solid rgb(24,156,217);
+  border: 4px solid rgb(5,65,240);
   width:120px;
-  font-size: 25;
   display: inline-block;
   margin:10px;
   border-radius: 20px;
@@ -149,18 +161,12 @@ td {
 }
 
 .Ftime {
-  font-size: 25;
 }
 
 .content2 {
   margin-top: 5%;
 }
 
-@font-face {
-  font-family:"Bold";
-  src: url('/static/Bold5.otf');
-  font-display: swap;
-}
 
 A {
     text-decoration: none;
@@ -173,7 +179,7 @@ A {
     right: -20px;
     top: 40px;
     transform: translate(-50%, -50%);
-    background: rgb(24,156,217); /*цвет кнопки*/
+    background: rgb(5,65,240); /*цвет кнопки*/
     border-radius: 50%;
     width: 55px; /*ширина кнопки*/
     height: 55px; /*высота кнопки*/
@@ -192,7 +198,7 @@ A {
     display: block;
     position: absolute;
     border: 30%;
-    border: 1px solid rgb(24,156,217); /*цвет анимированных волн от кнопки*/
+    border: 1px solid rgb(5,65,240); /*цвет анимированных волн от кнопки*/
     left: -5px;
     right: -5px;
     top: -5px;

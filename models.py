@@ -22,7 +22,7 @@ class opk_spec(db.Model):
     name = db.Column(db.String(127), nullable=False)
     nameSize = db.Column(db.String(15), nullable=False)
 
-class admins_sait (db.Model, UserMixin):
+class admins_sait(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key = True)
     login = db.Column(db.String(128), nullable=False, unique=True)
     password = db.Column(db.String(128), nullable=False)
