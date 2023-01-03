@@ -2,7 +2,7 @@ import telebot
 import random
 import time
 
-bot = telebot.TeleBot("5608566941:AAEfvPnnO_7yzAA0B8Pl661AJQYILgUNkiY")
+bot = telebot.TeleBot()
 
 
 
